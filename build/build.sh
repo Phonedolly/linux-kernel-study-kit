@@ -20,7 +20,7 @@ echo "make defconfig..."
 make O=$OUTPUT_PATH ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bcm2711_defconfig
 
 echo "kernel build..."
-make O=$OUTPUT_PATH ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image modules dtbs -j3 2>&1 | tee $BUILD_LOG_PATH
+make O=$OUTPUT_PATH ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image modules dtbs -j16 2>&1 | tee $BUILD_LOG_PATH
 
 echo "move to tmp as sdcard..."
 cd $OUTPUT_PATH
@@ -36,6 +36,7 @@ mkdir mnt/ext4
 env PATH=$PATH make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- INSTALL_MOD_PATH=mnt/ext4 modules_install
 
 echo "copy kernel and device tree blobs to sdcard..."
+cp mnt/fat32/$KERNEL.img mnt/fat32/$KERNEL-backup.img
 cp arch/arm64/boot/Image mnt/fat32/$KERNEL.img
 cp arch/arm64/boot/dts/broadcom/*.dtb mnt/fat32/
 cp arch/arm64/boot/dts/overlays/*.dtb* mnt/fat32/overlays/
