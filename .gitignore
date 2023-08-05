@@ -1,3 +1,4 @@
 # linux kernel source
 build/linux
 build/out
+build/build.log
