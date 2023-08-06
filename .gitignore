@@ -2,3 +2,4 @@
 build/linux
 build/out
 build/build.log
+out.tar.gz
